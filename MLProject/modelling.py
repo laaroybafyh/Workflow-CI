@@ -13,7 +13,11 @@ def train_model():
     mlflow.set_tracking_uri("http://127.0.0.1:5000")
     
     # Enable MLflow Autologging for Scikit-Learn
-    mlflow.sklearn.autolog()
+    mlflow.sklearn.autolog(
+        log_input_examples=True,
+        log_model_signatures=True,
+        log_models=True
+    )
     
     # 2. Load preprocessed dataset
     dataset_path = os.path.join(os.path.dirname(__file__), 'heart_disease_preprocessed/heart_disease_preprocessed.csv')
