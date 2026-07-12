@@ -9,8 +9,16 @@ import mlflow.sklearn
 def train_model():
     print("Starting Model Training (Basic Workflow with Autolog)...")
     
-    # 1. Set MLflow tracking URI (Localhost Tracking)
-    mlflow.set_tracking_uri("http://127.0.0.1:5000")
+    # 1. Set MLflow tracking URI (Localhost Tracking with Fallback)
+    import urllib.request
+    tracking_uri = "http://127.0.0.1:5000"
+    try:
+        # Quick health check to see if MLflow server is active
+        urllib.request.urlopen(tracking_uri, timeout=1.0)
+        mlflow.set_tracking_uri(tracking_uri)
+        print(f"Connected to MLflow Tracking Server at {tracking_uri}")
+    except Exception:
+        print(f"MLflow server not running at {tracking_uri}. Logging runs locally to './mlruns' folder.")
     
     # Enable MLflow Autologging for Scikit-Learn
     mlflow.sklearn.autolog(
