@@ -1,0 +1,2 @@
+Docker Hub integration is optional for the Skilled level. 
+The CI workflow is configured to automatically retrain the model and upload the MLflow runs directory containing the model artifacts directly to GitHub (using actions/upload-artifact).
